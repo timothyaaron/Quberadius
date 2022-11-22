@@ -81,13 +81,15 @@ class Piece(arcade.Sprite):
                 self.set_texture(0)
 
     def can_move_to(self, square):
+        if self.square.elevation >= square.elevation + 2:
+            return False
+
         column = self.square.column
         row = self.square.row
-        for i in range(column-1, column+2):
-            for j in range(row-1, row+2):
-                try:
-                    if self.square.board.grid[i][j] == square:
-                        return True
-                except Exception:
-                    pass
-        return False
+
+        return (
+            self.square.board.grid[column+1][row] == square or \
+            self.square.board.grid[column][row+1] == square or \
+            self.square.board.grid[column-1][row] == square or \
+            self.square.board.grid[column][row-1] == square
+        )
