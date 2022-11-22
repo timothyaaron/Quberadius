@@ -2,7 +2,7 @@ import random
 
 import arcade
 
-from constants import HEIGHT, WIDTH, MARGIN
+from constants import HEIGHT, WIDTH, MARGIN, COLUMN_COUNT, ROW_COUNT
 
 
 class Square(arcade.Sprite):

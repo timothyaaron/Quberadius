@@ -41,7 +41,6 @@ class Board:
                 self.game.square_sprites.append(square)
 
     def add_players(self):
-        # add players
         self.players = []
         for idx in range(self.player_count):
             self.players.append(Player(idx))

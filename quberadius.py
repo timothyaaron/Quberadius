@@ -13,7 +13,6 @@ TODO:
  - ESC deactivates power first
  - ENTER to use selected CRR power
  - Keep piece selected after power use?
- - Show power count
  - Limit diagonal movement
  - Limit elevation movement
  - Add new Areas of Effect

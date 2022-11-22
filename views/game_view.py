@@ -14,7 +14,6 @@ from constants import (
     HIGHLIGHT_COLOR,
 )
 from objects.board import Board
-from objects.piece import Piece
 
 
 def pop_if(items, index, default=None):
@@ -102,7 +101,7 @@ class GameView(arcade.View):
             self.debug_window.text = "Deselecting piece."
 
             if self.board.power:
-                self.board.selected.piece.powers += [self.board.power]
+                # self.board.selected.piece.powers += [self.board.power]  # fix this
                 self.board.power = None
 
             if self.board.selected:
@@ -122,6 +121,7 @@ class GameView(arcade.View):
             arcade.key.KEY_8: 8,
             arcade.key.KEY_9: 9,
         }
+
         if (num := numbers.get(symbol)):
             try:
                 power = list(self.board.selected.piece.powers.values())[num-1]
@@ -184,7 +184,7 @@ class GameView(arcade.View):
             self.board.selected = None  # deselect square
 
             # end turn
-            if self.board.power == 1:
+            if self.board.power == 1:  # TODO fix this
                 self.board.power = None
             else:
                 # next player's turn
@@ -210,7 +210,8 @@ class GameView(arcade.View):
             output.append("")
             powers = self.board.selected.piece.powers
             for i, name in enumerate(powers):
-                output.append(f"{i + 1}: {name}")
+                count = f" ({powers[name].count})" if powers[name].count > 1 else ""
+                output.append(f"{i + 1}: {name}{count}")
 
         self.debug_window.text = "\n".join(output)
 
