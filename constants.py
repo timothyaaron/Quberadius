@@ -1,0 +1,28 @@
+import arcade
+
+
+# Colors
+DEFAULT_COLOR = arcade.color.WHITE
+HIGHLIGHT_COLOR = arcade.color.YELLOW
+SELECTED_COLOR = arcade.color.YELLOW_ROSE
+PLAYER_COLORS = [
+    arcade.color.RED,
+    arcade.color.GREEN,
+    arcade.color.BLUE,
+    arcade.color.YELLOW,
+    arcade.color.PINK,
+]
+
+# Square dimensions
+PLAYER_COUNT = 3
+ROW_COUNT = COLUMN_COUNT = 7
+WIDTH = HEIGHT = 60
+MARGIN = 5
+
+# Window dimensions
+SIDEBAR_WIDTH = 390
+SIDEBAR_MARGIN = 10
+BOARD_WIDTH = (WIDTH + MARGIN) * COLUMN_COUNT + MARGIN
+BOARD_HEIGHT = (HEIGHT + MARGIN) * ROW_COUNT + MARGIN
+SCREEN_WIDTH = BOARD_WIDTH + SIDEBAR_WIDTH
+SCREEN_HEIGHT = BOARD_HEIGHT
