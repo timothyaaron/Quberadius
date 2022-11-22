@@ -151,16 +151,7 @@ class GameView(arcade.View):
         output.append(str(square))
 
         if self.board.power:
-            power = self.board.selected.piece.powers.get(self.board.power)
-            if power.is_valid(square, self):
-                if power.execute(square):
-                    self.debug_window.text = "Boom."
-                    square.piece.remove_power(power.name)
-                else:
-                    self.debug_window.text = "Not useful now. Deactivating."
-
-            self.board.selected = None
-            self.board.power = None
+            self.board.selected.piece.use_power(square)
             return # turn continues
 
         # Deselect a piece

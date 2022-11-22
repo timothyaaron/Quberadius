@@ -53,11 +53,25 @@ class Piece(arcade.Sprite):
             self.powers[name] = Power(name)
         self.set_texture(1)
 
-    def remove_power(self, name):
+    def use_power(self, square):
+        board = self.square.board
+        debug_window = board.game.debug_window
+        power = self.powers.get(board.power)
+        if power.is_valid(square, board.game):
+            if power.execute(square):
+                debug_window.text = "Boom."
+                square.piece.decrement_power(power.name)
+            else:
+                debug_window.text = "Not useful now. Deactivating."
+
+        board.selected = None
+        board.power = None
+
+    def decrement_power(self, name, count=1):
         power = self.powers.get(name)
 
         if power:
-            power.count -= 1
+            power.count -= count
             if power.count <= 0:
                 del self.powers[power.name]
 
