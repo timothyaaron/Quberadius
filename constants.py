@@ -8,9 +8,8 @@ SELECTED_COLOR = arcade.color.YELLOW_ROSE
 PLAYER_COLORS = [
     arcade.color.RED,
     arcade.color.GREEN,
-    arcade.color.BLUE,
     arcade.color.YELLOW,
-    arcade.color.PINK,
+    arcade.color.BLUE,
 ]
 
 # Square dimensions

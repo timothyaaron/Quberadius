@@ -8,6 +8,7 @@ from objects.power import Power
 
 
 class Piece(arcade.Sprite):
+    counter = 0
     POWER_TEXTURE = arcade.load_texture(":resources:images/tiles/boxCrate_double.png")
 
     def __init__(self, player, **kwargs):
@@ -20,18 +21,21 @@ class Piece(arcade.Sprite):
             filename=":resources:images/tiles/boxCrate.png",
             angle=random.randint(-5, 5),
         )
-        self.alpha = 160
+        self.alpha = 170
         self.player = player
         self.square = None
         self.powers = OrderedDict()
         self.turns = 0
 
+        Piece.counter += 1
+        self.counter = Piece.counter
+
         self.append_texture(Piece.POWER_TEXTURE)
         for _ in range(random.randint(0, 3)):
             self.add_power()
 
-    def __repr__(self):
-        return f"Player {self.player.idx})"
+    def __str__(self):
+        return f"Piece {self.counter} (Player {self.player.idx})"
 
     @property
     def player(self):
@@ -49,6 +53,7 @@ class Piece(arcade.Sprite):
         ])
         if name in self.powers:
             self.powers[name].count += 1
+            Power.counter += 1
         else:
             self.powers[name] = Power(name)
         self.set_texture(1)

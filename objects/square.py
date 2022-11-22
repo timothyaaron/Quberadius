@@ -25,7 +25,7 @@ class Square(arcade.Sprite):
         )
 
         self.elevation = 3
-        self.alpha = 160
+        self.alpha = 170
 
         self.board = board
         self._piece = None
@@ -48,6 +48,17 @@ class Square(arcade.Sprite):
             value.center_y = self.center_y
             value.alpha = self.alpha
             value.square = self
+
+    def remove_piece(self, keep_player=None):
+        for list in self.board.game.piece_sprites:
+            try:
+                if self.piece.player != keep_player:
+                    list.remove(self.piece)
+                    if len(list) == 0:
+                        self.players.remove(self.piece.player)
+                    return True
+            except Exception:
+                pass
 
     def push_down_column(self):
         return any([self.board.grid[i][self.column].push_down() for i in range(COLUMN_COUNT)])

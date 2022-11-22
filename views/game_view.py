@@ -14,7 +14,7 @@ from constants import (
     HIGHLIGHT_COLOR,
 )
 from objects.board import Board
-from objects.power import Power
+from objects.piece import Piece
 
 
 def pop_if(items, index, default=None):
@@ -148,7 +148,7 @@ class GameView(arcade.View):
             return
 
         square = self.board.grid[column][row]
-        output.append(str(square))
+        output.append(f"{square} - {square.piece}")
 
         if self.board.power:
             self.board.selected.piece.use_power(square)
@@ -171,7 +171,7 @@ class GameView(arcade.View):
         elif self.board.selected and self.board.selected.piece.can_move_to(square):
             # not mine? kill it
             if square.piece and not square.piece in GameView.piece_sprites[self.board.current.idx]:
-                self.board.remove_piece(square.piece)
+                square.remove_piece()
 
             square.piece = self.board.selected.piece  # add piece to new square
 
@@ -211,6 +211,7 @@ class GameView(arcade.View):
             powers = self.board.selected.piece.powers
             for i, name in enumerate(powers):
                 output.append(f"{i + 1}: {name}")
+
         self.debug_window.text = "\n".join(output)
 
     def on_mouse_motion(self, x, y, dx, dy):

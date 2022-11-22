@@ -73,14 +73,3 @@ class Board:
         self._selected = new_selected
         if self._selected:
             self._selected.color = SELECTED_COLOR
-
-    def remove_piece(self, piece, keep_player=None):
-        for list in self.game.piece_sprites:
-            try:
-                if piece.player != keep_player:
-                    list.remove(piece)
-                    if len(list) == 0:
-                        self.players.remove(piece.player)
-                    return True
-            except Exception:
-                pass
