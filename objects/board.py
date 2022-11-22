@@ -27,16 +27,27 @@ class Board:
         self._selected = None
         self.power = False
         self.turns = 0
+        self.grid = []
 
     def add_squares(self):
         # build grid
-        self.grid = []
         for column in range(self.column_count):
             self.grid.append([])
 
             # add squares
             for row in range(self.row_count):
                 square = Square(self, row, column)
+                elevation = random.randint(1, 60)
+                if elevation < 5:
+                    square.push_down()
+                    square.push_down()
+                elif elevation < 25:
+                    square.push_down()
+                elif elevation > 55:
+                    square.pull_up()
+                    square.pull_up()
+                elif elevation > 35:
+                    square.pull_up()
                 self.grid[column].append(square)
                 self.game.square_sprites.append(square)
 
