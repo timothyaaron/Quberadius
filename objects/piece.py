@@ -87,9 +87,25 @@ class Piece(arcade.Sprite):
         column = self.square.column
         row = self.square.row
 
-        return (
-            self.square.board.grid[column+1][row] == square or \
-            self.square.board.grid[column][row+1] == square or \
-            self.square.board.grid[column-1][row] == square or \
-            self.square.board.grid[column][row-1] == square
-        )
+        try:
+            if self.square.board.grid[column+1][row] == square:
+                return True
+        except IndexError:
+            pass
+        try:
+            if self.square.board.grid[column][row+1] == square:
+                return True
+        except IndexError:
+            pass
+        try:
+            if self.square.board.grid[column-1][row] == square:
+                return True
+        except IndexError:
+            pass
+        try:
+            if self.square.board.grid[column][row-1] == square:
+                return True
+        except IndexError:
+            pass
+
+        return False
