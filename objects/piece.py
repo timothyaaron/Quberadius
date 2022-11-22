@@ -4,7 +4,7 @@ from collections import OrderedDict
 import arcade
 
 from constants import PLAYER_COLORS, WIDTH
-from objects.power import Power
+from objects.power import POWERS, Power
 
 
 class Piece(arcade.Sprite):
@@ -31,7 +31,7 @@ class Piece(arcade.Sprite):
         self.counter = Piece.counter
 
         self.append_texture(Piece.POWER_TEXTURE)
-        for _ in range(random.randint(0, 3)):
+        for _ in range(random.randint(0, 5)):
             self.add_power()
 
     def __str__(self):
@@ -47,10 +47,7 @@ class Piece(arcade.Sprite):
         self.color = PLAYER_COLORS[value.idx]
 
     def add_power(self, name=None):
-        name = name or random.choice([
-            "Destroy Row", "Destroy Column",
-            "Lower Row", "Lower Column", "Lower",
-        ])
+        name = name or random.choice(POWERS)
         if name in self.powers:
             self.powers[name].count += 1
             Power.counter += 1
