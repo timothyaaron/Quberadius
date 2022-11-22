@@ -50,15 +50,14 @@ class Square(arcade.Sprite):
             value.square = self
 
     def remove_piece(self, keep_player=None):
-        for list in self.board.game.piece_sprites:
-            try:
-                if self.piece.player != keep_player:
-                    list.remove(self.piece)
-                    if len(list) == 0:
-                        self.players.remove(self.piece.player)
-                    return True
-            except Exception:
-                pass
+        player = self.piece.player
+        player_sprites = self.board.game.piece_sprites
+        if player != keep_player:
+            player_sprites[player.idx].remove(self.piece)
+            self.piece = None
+            if len(player_sprites) == 0:
+                self.players.remove(player)
+            return True
 
     def push_down_column(self):
         return any([self.board.grid[i][self.column].push_down() for i in range(COLUMN_COUNT)])
