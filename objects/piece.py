@@ -60,7 +60,7 @@ class Piece(arcade.Sprite):
         if power.is_valid(square, board.game):
             if power.execute(square):
                 debug_window.text = "Boom."
-                square.piece.decrement_power(power.name)
+                self.decrement_power(power.name)
             else:
                 debug_window.text = "Not useful now. Deactivating."
 

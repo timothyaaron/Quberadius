@@ -178,7 +178,7 @@ class GameView(arcade.View):
             # incr turn
             self.board.current.turns += 1
             if self.board.current.turns % 3 == 0:
-                self.board.selected.piece.powers.append(1)
+                square.piece.add_power()
 
             self.board.selected.piece = None  # remove piece from old square
             self.board.selected = None  # deselect square
@@ -207,8 +207,10 @@ class GameView(arcade.View):
 
         # append incoming players powers
         if self.board.selected:
+            output.append("")
             powers = self.board.selected.piece.powers
-            output.append("\n".join([str(i+1) + ": " + str(p) for i, p in enumerate(powers)]))
+            for i, name in enumerate(powers):
+                output.append(f"{i + 1}: {name}")
         self.debug_window.text = "\n".join(output)
 
     def on_mouse_motion(self, x, y, dx, dy):
