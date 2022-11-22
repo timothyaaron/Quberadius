@@ -180,7 +180,7 @@ class GameView(arcade.View):
         elif self.board.selected and self.board.selected.piece.can_move_to(square):
             # not mine? kill it
             if square.piece and not square.piece in GameView.piece_sprites[self.board.current.idx]:
-                square.piece.remove()
+                self.board.remove_piece(square.piece)
 
             square.piece = self.board.selected.piece  # add piece to new square
 
