@@ -4,6 +4,8 @@ from constants import COLUMN_COUNT, ROW_COUNT
 POWERS = [
     "Destroy Column",
     "Destroy Row",
+    "Kamakazi Column",
+    "Kamakazi Row",
     "Lower Tile Column",
     "Lower Tile Row",
     "Lower Tile",
@@ -66,6 +68,16 @@ class Power:
         board = square.board
         squares = [board.grid[i][square.row] for i in range(COLUMN_COUNT)]
         return any([s.remove_piece(keep_player=board.current) for s in squares if s.piece])
+
+    def kamakazi_column(self, square):
+        board = square.board
+        squares = [board.grid[square.column][j] for j in range(ROW_COUNT)]
+        return any([s.remove_piece() for s in squares if s.piece])
+
+    def kamakazi_row(self, square):
+        board = square.board
+        squares = [board.grid[i][square.row] for i in range(COLUMN_COUNT)]
+        return any([s.remove_piece() for s in squares if s.piece])
 
     def wall_column(self, square):
         board = square.board

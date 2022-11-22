@@ -13,8 +13,6 @@ TODO:
  - ESC deactivates power first
  - ENTER to use selected CRR power
  - Keep piece selected after power use?
- - Limit diagonal movement
- - Limit elevation movement
  - Add new Areas of Effect
    - Radial
    - Diagonal?
@@ -22,12 +20,13 @@ TODO:
  - New Views
    - Start Game/Set Options
    - End Game/Restart
+ - Show Square details on hover
+ - Show each Player's last move/power use
 
 
  - Add Powers
    EASY
-   - Wall, Trench, Raise, Invert + CRR
-   - Kamikazi + CRR
+   - Invert + CRR
    - Roulette + CRR
    - Randomize + CRR
    - Stupify + CRR
