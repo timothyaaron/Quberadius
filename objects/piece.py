@@ -1,4 +1,5 @@
 import random
+from collections import OrderedDict
 
 import arcade
 
@@ -7,6 +8,8 @@ from objects.power import Power
 
 
 class Piece(arcade.Sprite):
+    POWER_TEXTURE = arcade.load_texture(":resources:images/tiles/boxCrate_double.png")
+
     def __init__(self, player, **kwargs):
         super().__init__(
             center_x=0,
@@ -14,17 +17,18 @@ class Piece(arcade.Sprite):
             image_width=128,
             image_height=128,
             scale=WIDTH / 128 / 1.4,
-            filename=":resources:images/tiles/boxCrate_double.png",
+            filename=":resources:images/tiles/boxCrate.png",
             angle=random.randint(-5, 5),
         )
         self.alpha = 160
         self.player = player
         self.square = None
-        self.powers = [
-            Power("Destroy Row"), Power("Destroy Column"),
-            Power("Lower Row"), Power("Lower Column"), Power("Lower"),
-        ]
+        self.powers = OrderedDict()
         self.turns = 0
+
+        self.append_texture(Piece.POWER_TEXTURE)
+        for _ in range(random.randint(0, 3)):
+            self.add_power()
 
     def __repr__(self):
         return f"Player {self.player.idx})"
@@ -37,6 +41,28 @@ class Piece(arcade.Sprite):
     def player(self, value):
         self._player = value
         self.color = PLAYER_COLORS[value.idx]
+
+    def add_power(self, name=None):
+        name = name or random.choice([
+            "Destroy Row", "Destroy Column",
+            "Lower Row", "Lower Column", "Lower",
+        ])
+        if name in self.powers:
+            self.powers[name].count += 1
+        else:
+            self.powers[name] = Power(name)
+        self.set_texture(1)
+
+    def remove_power(self, name):
+        power = self.powers.get(name)
+
+        if power:
+            power.count -= 1
+            if power.count <= 0:
+                del self.powers[power.name]
+
+            if not self.powers:
+                self.set_texture(0)
 
     def can_move_to(self, square):
         column = self.square.column

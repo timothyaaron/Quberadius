@@ -123,15 +123,14 @@ class GameView(arcade.View):
             arcade.key.KEY_9: 9,
         }
         if (num := numbers.get(symbol)):
-            if self.board.selected and (power := pop_if(self.board.selected.piece.powers, num-1)):
-                self.board.power = power
-                self.debug_window.text = f"Activating {power.name}…\n"
+            try:
+                power = list(self.board.selected.piece.powers.values())[num-1]
+            except IndexError:
+                power = None
 
-        if symbol == arcade.key.SPACE:
-            if not self.board.power and self.board.selected \
-                    and self.board.selected.piece.powers:
-                self.board.power = self.board.selected.piece.powers.pop()
-                self.debug_window.text = f"Activating {self.board.power.name}…\n"
+            if self.board.selected and power:
+                self.board.power = power.name
+                self.debug_window.text = f"Activating {power.name}…\n"
 
     def on_mouse_press(self, x, y, button, modifiers):
         """
@@ -151,16 +150,14 @@ class GameView(arcade.View):
         square = self.board.grid[column][row]
         output.append(str(square))
 
-        if isinstance(self.board.power, Power):
-            power = self.board.power
+        if self.board.power:
+            power = self.board.selected.piece.powers.get(self.board.power)
             if power.is_valid(square, self):
                 if power.execute(square):
                     self.debug_window.text = "Boom."
+                    square.piece.remove_power(power.name)
                 else:
                     self.debug_window.text = "Not useful now. Deactivating."
-                    self.board.selected.piece.powers += [self.board.power]
-            else:
-                self.board.selected.piece.powers += [self.board.power]
 
             self.board.selected = None
             self.board.power = None
