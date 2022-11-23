@@ -22,7 +22,6 @@ TODO:
    - End Game/Restart
  - Show Square details on hover
  - Show each Player's last move/power use
- - Pass turn
 
 
  - Add Powers

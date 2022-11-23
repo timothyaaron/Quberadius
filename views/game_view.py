@@ -94,6 +94,9 @@ class GameView(arcade.View):
             symbol {int} -- Which key was pressed
             modifiers {int} -- Which modifiers were pressed
         """
+        if symbol == arcade.key.SPACE:
+            self.board.end_turn()
+
         if symbol == arcade.key.Q:
             arcade.close_window()
 
@@ -157,7 +160,7 @@ class GameView(arcade.View):
         # Deselect a piece
         elif square == self.board.selected:
             output.append(f"Deselected: {self.board.selected.piece}")
-            self.board.selected = False
+            self.board.selected = None
 
         # ... select a piece
         elif square.piece and square.piece.player == self.board.current:
@@ -175,35 +178,10 @@ class GameView(arcade.View):
 
             square.piece = self.board.selected.piece  # add piece to new square
 
-            # incr turn
-            self.board.current.turns += 1
-            if self.board.current.turns % 3 == 0:
-                square.piece.add_power()
-
             self.board.selected.piece = None  # remove piece from old square
             self.board.selected = None  # deselect square
 
-            # end turn
-            if self.board.power == 1:  # TODO fix this
-                self.board.power = None
-            else:
-                # next player's turn
-                player_idx = self.board.players.index(self.board.current)
-                self.board.current = self.board.players[(player_idx + 1) % len(self.board.players)]
-
-                # next player's color
-                self.sidebar.children[0].children[0] = arcade.gui.UITextArea(
-                    text="Quberadius",
-                    text_color=self.board.current.color,
-                    width=SIDEBAR_WIDTH,
-                    height=50,
-                    font_size=36,
-                    font_name="Kenney Future",
-                )
-
-        # count rounds
-        if self.board.players[0] == self.board.current:
-            self.board.turns += 1
+            self.board.end_turn()
 
         # append incoming players powers
         if self.board.selected:

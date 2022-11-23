@@ -1,11 +1,14 @@
 import random
 
+import arcade
+
 from constants import (
     PLAYER_COUNT,
     DEFAULT_COLOR,
     ROW_COUNT,
     COLUMN_COUNT,
     SELECTED_COLOR,
+    SIDEBAR_WIDTH,
 )
 from objects.piece import Piece
 from objects.player import Player
@@ -57,6 +60,28 @@ class Board:
                 self.grid[i][j].piece = piece
                 self.game.piece_sprites[idx].append(piece)
         self.current = self.players[0]
+
+    def next_player(self):
+        player_idx = self.players.index(self.current)
+        return self.players[(player_idx + 1) % len(self.players)]
+
+    def end_turn(self):
+        self.current.turns += 1
+        self.current = self.next_player()
+
+        # next player's color
+        self.game.sidebar.children[0].children[0] = arcade.gui.UITextArea(
+            text="Quberadius",
+            text_color=self.current.color,
+            width=SIDEBAR_WIDTH,
+            height=50,
+            font_size=36,
+            font_name="Kenney Future",
+        )
+
+        # count rounds
+        if self.players[0] == self.current:
+            self.turns += 1
 
     @property
     def selected(self) -> int:
