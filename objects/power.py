@@ -1,3 +1,4 @@
+import random
 from constants import COLUMN_COUNT, ROW_COUNT
 
 
@@ -18,6 +19,7 @@ POWERS = [
     "Wall Column",
     "Wall Row",
     "Wall",
+    "Earthquake",
 ]
 
 class Power:
@@ -122,3 +124,21 @@ class Power:
 
     def raise_tile(self, square):
         return square.pull_up()
+
+    def earthquake(self, square):
+        board = square.board
+        for row in range(ROW_COUNT):
+            for column in range(COLUMN_COUNT):
+                square = board.grid[column][row]
+                elevation = random.randint(1, 60)
+                if elevation < 5:
+                    square.push_down()
+                    square.push_down()
+                elif elevation < 25:
+                    square.push_down()
+                elif elevation > 55:
+                    square.pull_up()
+                    square.pull_up()
+                elif elevation > 35:
+                    square.pull_up()
+        return True

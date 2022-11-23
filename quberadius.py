@@ -22,6 +22,7 @@ TODO:
    - End Game/Restart
  - Show Square details on hover
  - Show each Player's last move/power use
+ - Pass turn
 
 
  - Add Powers
@@ -30,7 +31,6 @@ TODO:
    - Roulette + CRR
    - Randomize + CRR
    - Stupify + CRR
-   - Earthquake - randomize all elevations
    - Push CRR - push pieces away from player
    - Pull CRR - pull pieces toward player
    - Teleport - move to any square
